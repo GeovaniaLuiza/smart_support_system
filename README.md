@@ -1,22 +1,22 @@
-# 🤖 Smart Support System
+# Smart Support System
 
 Sistema inteligente híbrido para análise de sentimentos, tratamento de incerteza e otimização de alocação de recursos em atendimento ao cliente.
 
 ---
 
-# 🎯 Objetivo
+# Objetivo
 
 Desenvolver um sistema inteligente capaz de processar informações não estruturadas (texto), tratar incertezas por meio de lógica fuzzy e otimizar decisões de alocação de recursos utilizando algoritmos de Inteligência Artificial.
 
 ---
 
-# 🧠 Arquitetura do Sistema
+# Arquitetura do Sistema
 
 O sistema é dividido em três camadas principais:
 
 ---
 
-## 📌 Camada I — Processamento de Linguagem Natural (PLN)
+## Camada I — Processamento de Linguagem Natural (PLN)
 
 - Algoritmo: Naive Bayes / Logistic Regression  
 - Técnica: TF-IDF + pré-processamento textual  
@@ -28,11 +28,10 @@ O sistema é dividido em três camadas principais:
 - Negativo  
 
 ### Dataset:
-:contentReference[oaicite:0]{index=0}
-
+https://www.kaggle.com/datasets/crowdflower/twitter-airline-sentiment
 ---
 
-## 🌫️ Camada II — Sistema Fuzzy (Incerteza)
+## Camada II — Sistema Fuzzy (Incerteza)
 
 - Tipo: Sistema de Inferência Fuzzy (Mamdani)
 - Entradas:
@@ -48,7 +47,7 @@ O sistema é dividido em três camadas principais:
 
 ---
 
-## 🔥 Camada III — Otimização Estocástica
+## Camada III — Otimização Estocástica
 
 - Algoritmo: Simulated Annealing  
 - Problema: Alocação de atendentes  
@@ -56,7 +55,7 @@ O sistema é dividido em três camadas principais:
 
 ---
 
-# 📊 Modelagem com Grafos
+# Modelagem com Grafos
 
 - Tipo: Grafo bipartido  
 - Nós:
@@ -66,7 +65,7 @@ O sistema é dividido em três camadas principais:
 
 ---
 
-# ⚙️ Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 - Python  
 - Pandas  
@@ -77,9 +76,9 @@ O sistema é dividido em três camadas principais:
 
 ---
 
-# 📁 Estrutura do Projeto
+# Estrutura do Projeto
 
-
+```bash
 smart_support_system/
 │
 ├── app.py
@@ -104,27 +103,32 @@ smart_support_system/
 │ └── graph_model.py
 │
 └── README.md
-
+```
 
 ---
 
-# 🚀 Como Executar
+# Como Executar
 
 ## 1. Instalar dependências
 ```bash
 pip install -r requirements.txt
+
 2. Treinar modelo
 python -m nlp.train_model
+
 3. Executar sistema (terminal)
 python app.py
+
 4. (Opcional) Interface web
 python -m streamlit run streamlit_app.py
-📈 Resultados
+
+Resultados
 Classificação automática de sentimentos
 Avaliação de satisfação do cliente
 Otimização de alocação de recursos
 Redução de tempo de espera
-🧠 Conclusão
+
+Conclusão
 
 O sistema integra diferentes áreas da Inteligência Artificial:
 
