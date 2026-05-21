@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 # Smart Support System | Sistema Inteligente de Atendimento ao Cliente
-=======
+
 # Smart Support System
->>>>>>> 87ef6ab054ebf7803b2cf6dc0477ffce05612274
 
 Sistema inteligente híbrido para análise de sentimentos, tratamento de incerteza e otimização de alocação de recursos em atendimento ao cliente.
 
@@ -81,10 +79,6 @@ https://www.kaggle.com/datasets/crowdflower/twitter-airline-sentiment
 ---
 
 # Estrutura do Projeto
-<<<<<<< HEAD
-
-=======
->>>>>>> 87ef6ab054ebf7803b2cf6dc0477ffce05612274
 
 ```bash
 smart_support_system/
@@ -129,7 +123,7 @@ python app.py
 
 4. (Opcional) Interface web
 python -m streamlit run streamlit_app.py
-<<<<<<< HEAD
+
 ```
 
 ## 2. Arquitetura do sistema
@@ -148,7 +142,6 @@ Simulated Annealing
    ↓
 Otimização da decisão
 ```
-=======
 
 Resultados
 Classificação automática de sentimentos
@@ -168,4 +161,3 @@ Grafos para modelagem estrutural
 
 Disciplina: Inteligência Artificial (N2)
 Sistema desenvolvido para fins educacionais
->>>>>>> 87ef6ab054ebf7803b2cf6dc0477ffce05612274
