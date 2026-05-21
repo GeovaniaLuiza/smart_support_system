@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Smart Support System | Sistema Inteligente de Atendimento ao Cliente
+=======
+# Smart Support System
+>>>>>>> 87ef6ab054ebf7803b2cf6dc0477ffce05612274
 
 Sistema inteligente híbrido para análise de sentimentos, tratamento de incerteza e otimização de alocação de recursos em atendimento ao cliente.
 
@@ -28,8 +32,7 @@ O sistema é dividido em três camadas principais:
 - Negativo  
 
 ### Dataset:
-:contentReference[oaicite:0]{index=0}
-
+https://www.kaggle.com/datasets/crowdflower/twitter-airline-sentiment
 ---
 
 ## Camada II — Sistema Fuzzy (Incerteza)
@@ -78,8 +81,12 @@ O sistema é dividido em três camadas principais:
 ---
 
 # Estrutura do Projeto
+<<<<<<< HEAD
 
+=======
+>>>>>>> 87ef6ab054ebf7803b2cf6dc0477ffce05612274
 
+```bash
 smart_support_system/
 │
 ├── app.py
@@ -104,7 +111,7 @@ smart_support_system/
 │ └── graph_model.py
 │
 └── README.md
-
+```
 
 ---
 
@@ -113,12 +120,16 @@ smart_support_system/
 ## 1. Instalar dependências
 ```bash
 pip install -r requirements.txt
+
 2. Treinar modelo
 python -m nlp.train_model
+
 3. Executar sistema (terminal)
 python app.py
+
 4. (Opcional) Interface web
 python -m streamlit run streamlit_app.py
+<<<<<<< HEAD
 ```
 
 ## 2. Arquitetura do sistema
@@ -137,3 +148,24 @@ Simulated Annealing
    ↓
 Otimização da decisão
 ```
+=======
+
+Resultados
+Classificação automática de sentimentos
+Avaliação de satisfação do cliente
+Otimização de alocação de recursos
+Redução de tempo de espera
+
+Conclusão
+
+O sistema integra diferentes áreas da Inteligência Artificial:
+
+PLN para interpretação de texto
+Fuzzy para incerteza
+Metaheurísticas para otimização
+Grafos para modelagem estrutural
+👨‍💻 Projeto Acadêmico
+
+Disciplina: Inteligência Artificial (N2)
+Sistema desenvolvido para fins educacionais
+>>>>>>> 87ef6ab054ebf7803b2cf6dc0477ffce05612274
