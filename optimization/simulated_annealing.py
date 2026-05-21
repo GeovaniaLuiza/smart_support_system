@@ -1,100 +1,111 @@
+# ==========================================================
+# OTIMIZAÇÃO ESTOCÁSTICA — SIMULATED ANNEALING
+# ==========================================================
+#
+# Este módulo implementa o algoritmo meta-heurístico
+# Simulated Annealing (Recozimento Simulado).
+#
+# Objetivo:
+# Resolver o problema de alocação de tickets
+# para atendentes de forma otimizada.
+#
+# O algoritmo busca:
+#
+# ✔ Maximizar satisfação dos clientes
+# ✔ Evitar sobrecarga de atendentes
+# ✔ Melhorar distribuição de tarefas
+#
+# Conceitos aplicados:
+#
+# - Otimização Estocástica
+# - Meta-heurísticas
+# - Busca combinatória
+# - Escalonamento de tarefas
+# - Alocação de recursos
+#
+# ==========================================================
+
+
+
+# ==========================================================
+# IMPORTAÇÃO DAS BIBLIOTECAS
+# ==========================================================
+
+# Biblioteca para geração de números aleatórios
 import random
+
+# Biblioteca matemática
+#
+# Utilizada na função exponencial do algoritmo.
+#
 import math
 
+
+
+# ==========================================================
+# CONFIGURAÇÕES DO SISTEMA
+# ==========================================================
+
+# Número total de atendentes disponíveis
 NUM_ATTENDANTS = 3
+
+
+# Número máximo de tickets permitidos
+# para cada atendente
 MAX_TICKETS_PER_ATTENDANT = 4
+
+
+
+# ==========================================================
+# FUNÇÃO OBJETIVO
+# ==========================================================
+#
+# A função objetivo mede a qualidade de uma solução.
+#
+# Entrada:
+# - solution -> distribuição de tickets
+# - satisfactions -> satisfação dos clientes
+#
+# Objetivo:
+# Maximizar satisfação e minimizar sobrecarga.
+#
+# ==========================================================
 
 def objective(solution, satisfactions):
 
+
+    # ------------------------------------------------------
+    # Variável de pontuação da solução
+    # ------------------------------------------------------
+
     score = 0
+
+
+
+    # ------------------------------------------------------
+    # Controle da quantidade de tickets
+    # por atendente
+    # ------------------------------------------------------
 
     attendant_load = {
         i: 0 for i in range(NUM_ATTENDANTS)
     }
 
-    for i, attendant in enumerate(solution):
 
-        attendant_load[attendant] += 1
 
-        score += satisfactions[i]
-
-    # Penalidade por sobrecarga
-    penalty = 0
-
-    for attendant, load in attendant_load.items():
-
-        if load > MAX_TICKETS_PER_ATTENDANT:
-
-            penalty += (load - MAX_TICKETS_PER_ATTENDANT) * 20
-
-    return score - penalty
-
-def random_neighbor(solution):
-
-    neighbor = solution.copy()
-
-    idx = random.randint(0, len(solution)-1)
-
-    neighbor[idx] = random.randint(
-        0,
-        NUM_ATTENDANTS - 1
-    )
-
-    return neighbor
-
-def simulated_annealing(satisfactions):
-
-    n = len(satisfactions)
-
-    current_solution = [
-        random.randint(0, NUM_ATTENDANTS - 1)
-        for _ in range(n)
-    ]
-
-    current_cost = objective(
-        current_solution,
-        satisfactions
-    )
-
-    best_solution = current_solution.copy()
-    best_cost = current_cost
-
-    temperature = 100
-
-    cooling_rate = 0.95
-
-    while temperature > 1:
-
-        neighbor = random_neighbor(current_solution)
-
-        neighbor_cost = objective(
-            neighbor,
-            satisfactions
-        )
-
-        delta = neighbor_cost - current_cost
-
-        if delta > 0:
-
-            current_solution = neighbor
-            current_cost = neighbor_cost
-
-        else:
-
-            probability = math.exp(
-                delta / temperature
-            )
-
-            if random.random() < probability:
-
-                current_solution = neighbor
-                current_cost = neighbor_cost
-
-        if current_cost > best_cost:
-
-            best_solution = current_solution.copy()
-            best_cost = current_cost
-
-        temperature *= cooling_rate
-
-    return best_solution, best_cost
+    # ======================================================
+    # PROCESSAMENTO DA SOLUÇÃO
+    # ======================================================
+    #
+    # solution:
+    # lista onde cada posição representa:
+    #
+    # ticket -> atendente responsável
+    #
+    # Exemplo:
+    #
+    # [0, 1, 2, 0]
+    #
+    # significa:
+    #
+    # ticket 0 →
