@@ -1,68 +1,21 @@
 # ==========================================================
 # INTERFACE WEB — SISTEMA INTELIGENTE DE ATENDIMENTO
 # ==========================================================
-#
-# Este módulo implementa a interface gráfica do sistema
-# utilizando Streamlit.
-#
-# Objetivo:
-# Permitir interação amigável entre usuário e sistema
-# inteligente através de uma aplicação web.
-#
-# O sistema integra:
-#
-# ✔ PLN com Naive Bayes
-# ✔ Sistema de Inferência Fuzzy
-# ✔ Tomada de decisão inteligente
-#
-# Fluxo do sistema:
-#
-# Usuário
-#    ↓
-# Mensagem textual
-#    ↓
-# Classificação de sentimento
-#    ↓
-# Inferência fuzzy
-#    ↓
-# Nível de satisfação
-#
-# ==========================================================
 
-
-
-# ==========================================================
-# IMPORTAÇÃO DAS BIBLIOTECAS
-# ==========================================================
-
-# Biblioteca responsável pela interface web
 import streamlit as st
+import random
 
-
-# Função responsável pela análise de sentimentos
-#
-# Camada I — PLN
-#
 from nlp.predict import predict_sentiment
-
-
-# Função responsável pela inferência fuzzy
-#
-# Camada II — Sistema Fuzzy
-#
 from fuzzy.fuzzy_system import evaluate_satisfaction
 
+# ==========================================================
+# 🔥 CAMADA III — OTIMIZAÇÃO (SIMULATED ANNEALING)
+# ==========================================================
+from optimization.simulated_annealing import simulated_annealing
 
 
 # ==========================================================
 # CONFIGURAÇÃO DA PÁGINA
-# ==========================================================
-#
-# Define:
-# - título da aba
-# - ícone
-# - layout
-#
 # ==========================================================
 
 st.set_page_config(
@@ -71,76 +24,22 @@ st.set_page_config(
     layout="centered"
 )
 
-
-
-# ==========================================================
-# TÍTULO PRINCIPAL
-# ==========================================================
-
 st.title("🤖 Sistema Inteligente de Atendimento ao Cliente")
-
-
-
-# ==========================================================
-# DESCRIÇÃO DO SISTEMA
-# ==========================================================
-#
-# Explica as tecnologias utilizadas no projeto.
-#
-# ==========================================================
 
 st.markdown("""
 Este sistema analisa mensagens de clientes usando:
 
 - PLN (Naive Bayes)
 - Sistema Fuzzy (Mamdani)
-- Inferência de satisfação
+- Simulated Annealing (Otimização)
 """)
 
 
-
 # ==========================================================
-# ENTRADAS DO USUÁRIO
+# ENTRADAS
 # ==========================================================
-#
-# Nesta seção o usuário fornece os dados necessários
-# para análise.
-#
-# ==========================================================
-
-
-
-# ----------------------------------------------------------
-# CAMPO DE TEXTO
-# ----------------------------------------------------------
-#
-# O usuário digita uma mensagem textual.
-#
-# Exemplo:
-# "O atendimento foi excelente"
-#
-# text_area():
-# cria uma caixa de texto multilinha.
-#
-# ----------------------------------------------------------
 
 texto = st.text_area("✍️ Digite a mensagem do cliente:")
-
-
-
-# ----------------------------------------------------------
-# SLIDER DO TEMPO DE ESPERA
-# ----------------------------------------------------------
-#
-# Entrada numérica utilizada pelo sistema fuzzy.
-#
-# Intervalo:
-# 0 até 60 minutos
-#
-# slider():
-# cria uma barra deslizante interativa.
-#
-# ----------------------------------------------------------
 
 tempo_espera = st.slider(
     "⏱️ Tempo de espera (minutos)",
@@ -148,214 +47,85 @@ tempo_espera = st.slider(
 )
 
 
-
 # ==========================================================
-# BOTÃO DE EXECUÇÃO
-# ==========================================================
-#
-# Quando o usuário clicar em "Analisar",
-# o sistema executará todas as camadas de IA.
-#
+# BOTÃO PRINCIPAL
 # ==========================================================
 
 if st.button("Analisar"):
 
-
-
-    # ------------------------------------------------------
-    # VALIDAÇÃO DA ENTRADA
-    # ------------------------------------------------------
-    #
-    # Verifica se o usuário digitou algum texto.
-    #
-    # strip():
-    # remove espaços vazios.
-    #
-    # ------------------------------------------------------
-
     if texto.strip() == "":
-
         st.warning("Digite uma mensagem.")
-
-
 
     else:
 
-
         # ==================================================
-        # CAMADA I — PLN + NAIVE BAYES
+        # CAMADA I — PLN
         # ==================================================
-        #
-        # A função predict_sentiment():
-        #
-        # 1) pré-processa o texto
-        # 2) aplica TF-IDF
-        # 3) utiliza Naive Bayes
-        # 4) retorna:
-        #
-        # sentimento
-        # confiança
-        #
-        # ==================================================
-
         sentimento, confianca = predict_sentiment(texto)
 
-
+        # ==================================================
+        # CAMADA II — FUZZY
+        # ==================================================
+        satisfacao = evaluate_satisfaction(confianca, tempo_espera)
 
         # ==================================================
-        # CAMADA II — SISTEMA FUZZY
-        # ==================================================
-        #
-        # O sistema fuzzy recebe:
-        #
-        # - confiança do classificador
-        # - tempo de espera
-        #
-        # E realiza:
-        #
-        # ✔ fuzzificação
-        # ✔ aplicação das regras fuzzy
-        # ✔ inferência Mamdani
-        # ✔ defuzzificação
-        #
-        # Retornando:
-        #
-        # → nível de satisfação
-        #
+        # 🔥 CAMADA III — OTIMIZAÇÃO (S.A.)
         # ==================================================
 
-        satisfacao = evaluate_satisfaction(
-            confianca,
-            tempo_espera
-        )
+        # Simula múltiplos tickets baseados na satisfação
+        num_tickets = 6
 
+        satisfactions = [
+            max(10, min(100, satisfacao + random.randint(-10, 10)))
+            for _ in range(num_tickets)
+        ]
+
+        # Executa Simulated Annealing
+        best_solution, best_score = simulated_annealing(satisfactions)
 
 
         # ==================================================
         # RESULTADOS
         # ==================================================
-        #
-        # Exibição das informações calculadas.
-        #
-        # ==================================================
 
         st.subheader("📊 Resultado")
 
-
-
-        # --------------------------------------------------
-        # Organização em colunas
-        # --------------------------------------------------
-
         col1, col2, col3 = st.columns(3)
-
-
-
-        # --------------------------------------------------
-        # Resultado da classificação
-        # --------------------------------------------------
 
         col1.metric("Sentimento", sentimento)
 
+        col2.metric("Confiança", f"{confianca:.2f}")
 
-
-        # --------------------------------------------------
-        # Confiança probabilística
-        # --------------------------------------------------
-
-        col2.metric(
-            "Confiança",
-            f"{confianca:.2f}"
-        )
-
-
-
-        # --------------------------------------------------
-        # Resultado fuzzy
-        # --------------------------------------------------
-
-        col3.metric(
-            "Satisfação",
-            f"{satisfacao:.2f}"
-        )
-
+        col3.metric("Satisfação", f"{satisfacao:.2f}")
 
 
         # ==================================================
-        # INTERPRETAÇÃO DOS RESULTADOS
+        # 🔥 RESULTADO DA OTIMIZAÇÃO
         # ==================================================
-        #
-        # O sistema converte o valor numérico de satisfação
-        # em uma interpretação textual.
-        #
-        # Regras:
-        #
-        # ≥ 70 → satisfeito
-        # ≥ 40 → neutro
-        # < 40 → insatisfeito
-        #
+
+        st.subheader("⚙️ Otimização de Atendimento (S.A.)")
+
+        st.write("Distribuição de tickets entre atendentes:")
+
+        st.write("📌 Distribuição otimizada:")
+
+        for i, att in enumerate(best_solution):
+            st.write(f"Ticket {i} → Atendente {att}")
+
+        st.metric("Score da Otimização", f"{best_score:.2f}")
+
+
+        # ==================================================
+        # INTERPRETAÇÃO
         # ==================================================
 
         st.subheader("🧠 Interpretação")
 
-
-
-        # --------------------------------------------------
-        # Cliente satisfeito
-        # --------------------------------------------------
-
         if satisfacao >= 70:
-
             st.success("Cliente satisfeito 👍")
 
-
-
-        # --------------------------------------------------
-        # Cliente neutro
-        # --------------------------------------------------
-
         elif satisfacao >= 40:
-
             st.warning("Cliente neutro 😐")
 
-
-
-        # --------------------------------------------------
-        # Cliente insatisfeito
-        # --------------------------------------------------
-
         else:
-
             st.error("Cliente insatisfeito 😡")
-
-
-
-# ==========================================================
-# IMPORTÂNCIA NO PROJETO
-# ==========================================================
-#
-# Este módulo representa a interface final do sistema.
-#
-# Ele conecta todas as camadas desenvolvidas:
-#
-# ✔ Interface Homem-Máquina
-# ✔ PLN
-# ✔ Naive Bayes
-# ✔ Sistema Fuzzy
-# ✔ Tomada de decisão
-#
-# Benefícios:
-#
-# - facilidade de uso
-# - visualização em tempo real
-# - interação intuitiva
-#
-# Relação com o trabalho:
-#
-# ✔ Inteligência Artificial
-# ✔ PLN
-# ✔ Inferência Fuzzy
-# ✔ Sistemas Inteligentes
-# ✔ Tratamento de incerteza
-#
-# ==========================================================
