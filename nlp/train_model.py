@@ -59,7 +59,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # =========================
-# 🤖 MODELO MELHORADO
+# MODELO MELHORADO
 # =========================
 
 model = Pipeline([
@@ -75,14 +75,14 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 
 # =========================
-# 📊 AVALIAÇÃO
+# AVALIAÇÃO
 # =========================
 
 print("\n=== CLASSIFICATION REPORT ===")
 print(classification_report(y_test, preds))
 
 # =========================
-# 💾 SALVAR MODELO
+# SALVAR MODELO
 # =========================
 
 with open("nlp/sentiment_model.pkl", "wb") as f:
@@ -91,7 +91,7 @@ with open("nlp/sentiment_model.pkl", "wb") as f:
 print("\nModelo treinado com dataset Kaggle e balanceado!")
 
 # =========================
-# 📊 CHECK FINAL
+# CHECK FINAL
 # =========================
 
 print("\nDistribuição final:")
